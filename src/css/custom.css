@@ -1,0 +1,255 @@
+@import "tailwindcss";
+
+:root { 
+  --ifm-color-primary:#2563eb; 
+  --ifm-color-primary-dark:#1d4ed8; 
+  --ifm-color-primary-darker:#1e40af; 
+  --ifm-color-primary-darkest:#1e3a8a; 
+  --ifm-color-primary-light:#3b82f6; 
+  --ifm-color-primary-lighter:#60a5fa; 
+  --ifm-color-primary-lightest:#93c5fd; 
+  --ifm-font-family-base:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; 
+}
+
+html { 
+  scroll-behavior:smooth; 
+}
+
+body { 
+  background:#f8fafc; 
+}
+
+.navbar { 
+  box-shadow:0 1px 0 rgba(15,23,42,.08);
+  background: white !important;
+}
+
+.navbar__title { 
+  font-weight:800; 
+}
+
+.main-wrapper { 
+  background:#f8fafc; 
+}
+
+.markdown img { 
+  border-radius:18px; 
+  border:1px solid #e2e8f0; 
+  box-shadow:0 18px 45px rgba(15,23,42,.12); 
+  margin:1.5rem 0; 
+}
+
+/* Footer personnalisé - Style professionnel - FORCÉ en light */
+.footer {
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%) !important;
+  border-top: 1px solid #e2e8f0 !important;
+}
+
+.footer--dark {
+  --ifm-footer-background-color: transparent !important;
+  --ifm-footer-color: #475569 !important;
+  --ifm-footer-title-color: #0f172a !important;
+  --ifm-footer-link-color: #475569 !important;
+  --ifm-footer-link-hover-color: #2563eb !important;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%) !important;
+}
+
+.footer__title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #0f172a !important;
+  margin-bottom: 1.2rem;
+  position: relative;
+  display: inline-block;
+}
+
+.footer__title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 30px;
+  height: 2px;
+  background: linear-gradient(90deg, #3b82f6, #06b6d4);
+  border-radius: 2px;
+}
+
+.footer__link-item {
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  color: #475569 !important;
+}
+
+.footer__link-item:hover {
+  transform: translateX(5px);
+  color: #2563eb !important;
+}
+
+.footer__copyright {
+  font-size: 0.8rem;
+  text-align: center;
+  border-top: 1px solid #e2e8f0 !important;
+  padding-top: 2rem;
+  margin-top: 1rem;
+  color: #64748b;
+}
+
+/* Ajout d'icônes personnalisées pour les liens externes */
+.footer__link-item[href*="portfolio"]::before {
+  content: "✨";
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.footer__link-item[href*="mailto"]::before {
+  content: "📧";
+  font-size: 0.9rem;
+}
+
+/* Animation de survol pour le copyright */
+.footer__copyright:hover {
+  background: linear-gradient(90deg, #3b82f6, #06b6d4);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  transition: all 0.3s ease;
+}
+
+/* Désactiver complètement le mode dark */
+[data-theme='dark'] {
+  display: none;
+}
+
+/* Masquer le bouton de switch de thème */
+.navbar__items .clean-btn.navbar__link[aria-label="Switch between dark and light mode"],
+.react-toggle,
+.navbar__item.react-toggle {
+  display: none !important;
+}
+
+/* Forcer toutes les variables en mode light */
+:root {
+  --ifm-color-primary: #3b82f6;
+  --ifm-color-primary-dark: #2563eb;
+  --ifm-color-primary-darker: #1d4ed8;
+  --ifm-color-primary-darkest: #1e40af;
+  --ifm-color-primary-light: #60a5fa;
+  --ifm-color-primary-lighter: #93c5fd;
+  --ifm-color-primary-lightest: #bfdbfe;
+  --ifm-background-color: #ffffff;
+  --ifm-background-surface-color: #f8fafc;
+  --ifm-font-color-base: #0f172a;
+}
+
+/* Forcer le style light même si le dark est actif */
+html[data-theme='dark'] {
+  --ifm-background-color: #ffffff !important;
+  --ifm-background-surface-color: #f8fafc !important;
+  --ifm-font-color-base: #0f172a !important;
+  --ifm-navbar-background-color: #ffffff !important;
+  --ifm-footer-background-color: #f8fafc !important;
+  --ifm-code-background: #f1f5f9 !important;
+}
+
+/* Force footer en light même si dark est détecté */
+html[data-theme='dark'] .footer,
+html[data-theme='dark'] .footer--dark {
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%) !important;
+  color: #475569 !important;
+}
+
+html[data-theme='dark'] .footer__title {
+  color: #0f172a !important;
+}
+
+html[data-theme='dark'] .footer__link-item {
+  color: #475569 !important;
+}
+
+html[data-theme='dark'] .footer__link-item:hover {
+  color: #2563eb !important;
+}
+
+html[data-theme='dark'] .footer__copyright {
+  color: #64748b !important;
+  border-top-color: #e2e8f0 !important;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-down {
+  animation: slideDown 0.3s ease-out;
+}
+
+/* Masquer complètement la navbar par défaut de Docusaurus */
+.navbar {
+  display: none !important;
+}
+
+/* Ajuster le padding du contenu principal car la navbar Docusaurus n'est plus là */
+.main-wrapper {
+  padding-top: 0 !important;
+}
+
+/* Supprimer l'espace réservé par Docusaurus pour sa navbar */
+.navbar ~ .main-wrapper {
+  padding-top: 0 !important;
+}
+
+/* Supprimer le soulignement sur tous les liens de la navbar personnalisée */
+nav a,
+nav a:hover,
+nav a:focus,
+nav a:active,
+.navbar-custom a,
+.navbar-custom a:hover {
+  text-decoration: none !important;
+}
+
+/* Supprimer le soulignement des liens Docusaurus par défaut */
+a:not(.navbar__link):hover,
+a:not(.navbar__link):focus {
+  text-decoration: none !important;
+}
+
+/* Éviter que le contenu saute */
+body {
+  padding-top: 0;
+  margin-top: 0;
+}
+
+/* S'assurer que le main-wrapper n'a pas de padding en trop */
+.main-wrapper {
+  padding-top: 0 !important;
+}
+
+/* Animation pour le menu mobile */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-down {
+  animation: slideDown 0.3s ease-out;
+}

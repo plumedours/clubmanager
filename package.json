@@ -1,0 +1,52 @@
+{
+  "name": "clubmanager",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "docusaurus": "docusaurus",
+    "start": "docusaurus start --host 0.0.0.0",
+    "build": "docusaurus build",
+    "clear": "docusaurus clear",
+    "serve": "docusaurus serve",
+    "typecheck": "tsc --noEmit",
+    "clean:install": "node -e \"require('fs').rmSync('node_modules',{recursive:true,force:true});require('fs').rmSync('package-lock.json',{force:true})\" && npm install"
+  },
+  "dependencies": {
+    "@docusaurus/core": "3.10.0",
+    "@docusaurus/preset-classic": "3.10.0",
+    "@mdx-js/react": "^3.0.0",
+    "@tailwindcss/postcss": "^4.1.16",
+    "clsx": "^2.1.1",
+    "prism-react-renderer": "^2.4.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^4.1.16",
+    "yet-another-react-lightbox": "^3.31.0"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "3.10.0",
+    "@docusaurus/tsconfig": "3.10.0",
+    "@docusaurus/types": "3.10.0",
+    "@types/react": "^18.3.12",
+    "typescript": "~5.6.3"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=20.0"
+  },
+  "overrides": {
+    "webpack": "5.95.0",
+    "webpackbar": "5.0.2"
+  }
+}
