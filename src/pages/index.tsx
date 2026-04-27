@@ -124,11 +124,12 @@ return (
               <span className="bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
                 ClubManager
               </span>
-              <br />
-              <span className="bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+            </h1>
+            <h2>
+              <span className="text-3xl bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
                 La gestion de club nouvelle génération
               </span>
-            </h1>
+            </h2>
             
             <p className="mx-auto mt-6 w-full text-lg text-slate-600 sm:text-xl leading-relaxed">
               Centralisez vos membres, finances, présences et rapports dans une interface 
