@@ -1,12 +1,131 @@
 # Dépannage
 
-Cette section regroupera les problèmes fréquents et leurs solutions.
+Cette section vous aide à résoudre les problèmes les plus fréquents rencontrés dans ClubManager.
 
-## Problèmes possibles
+---
 
-- L’application ne démarre pas
-- Les données ne s’affichent pas
-- Un rapport ne se génère pas
-- Une configuration est incorrecte
+## 🚫 L’application ne démarre pas
 
-<img src="/clubmanager/img/docs/aide/01.png" alt="Aide ClubManager" />
+### 🔍 Causes possibles
+- Configuration initiale incomplète
+- Problème de connexion à la base de données
+
+### ✅ Solutions
+- Relancer l’application
+- Ouvrir l’assistant de configuration (Paramètres > Maintenance)
+- Vérifier les paramètres de connexion
+
+---
+
+## 📭 Les données ne s’affichent pas
+
+### 🔍 Causes possibles
+- Base de données vide
+- Mauvais fichier ou chemin
+
+### ✅ Solutions
+- Vérifier la configuration dans Paramètres
+- Recharger l’application
+- Vérifier que des données existent
+
+---
+
+## 📧 Les e-mails ne fonctionnent pas
+
+### 🔍 Causes possibles
+- Mauvaise configuration SMTP
+- Identifiants incorrects
+- SSL/TLS non activé
+
+### ✅ Solutions
+- Vérifier les paramètres dans **Paramètres > E-mail**
+- Tester avec :
+  - smtp.gmail.com
+  - Port 587
+  - SSL/TLS activé
+- Vérifier le mot de passe
+
+---
+
+## 📄 Un rapport ne se génère pas
+
+### 🔍 Causes possibles
+- Dossier non configuré
+- Permissions insuffisantes
+
+### ✅ Solutions
+- Vérifier le dossier dans **Paramètres > Application**
+- S’assurer que le dossier existe
+- Vérifier les droits d’écriture
+
+---
+
+## ⚠️ Message “Aucun mot de passe configuré”
+
+### 🔍 Cause
+- Aucune sécurité activée
+
+### ✅ Solution
+- Aller dans **Paramètres > Sécurité**
+- Configurer un mot de passe
+
+---
+
+## 🔁 Message “Doublon possible”
+
+### 🔍 Cause
+Un punch récent existe déjà pour ce membre.
+
+### ✅ Solution
+- Attendre quelques minutes
+- Ou confirmer le punch manuellement
+
+👉 Le délai anti-doublon est configurable dans :
+**Paramètres > Punch**
+
+---
+
+## 🔄 Problème après modification des paramètres
+
+### 🔍 Cause
+Paramètres non appliqués
+
+### ✅ Solution
+- Cliquer sur **Enregistrer**
+- Redémarrer l’application si nécessaire
+
+---
+
+## 💾 Perte de données
+
+### 🔍 Cause
+Réinitialisation ou suppression
+
+### ✅ Solution
+- Restaurer une sauvegarde
+- Vérifier le dossier des sauvegardes
+
+---
+
+## 🛠️ Réinitialisation complète
+
+### ⚠️ Attention
+Cette action supprime toutes les données.
+
+### ✅ Solution
+- Aller dans **Paramètres > Maintenance**
+- Suivre les instructions
+- Une sauvegarde est créée automatiquement
+
+---
+
+## 🧠 Astuce générale
+
+En cas de problème :
+
+1. Vérifier les paramètres
+2. Redémarrer l’application
+3. Vérifier les données
+4. Consulter cette page
+
+---

@@ -9,6 +9,8 @@ const sidebars: SidebarsConfig = {
         'intro',
         'installation',
         'configuration',
+        'navigation',
+        'desinstallation',
       ],
     },
     {
@@ -24,6 +26,7 @@ const sidebars: SidebarsConfig = {
       label: 'Transactions',
       items: [
         'transactions/gestion-transactions',
+        'transactions/categories-financiere',
       ],
     },
     {
@@ -42,8 +45,22 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Paramètres',
+      items: [
+        'parametres/index',
+        'parametres/club',
+        'parametres/email',
+        'parametres/application',
+        'parametres/punch',
+        'parametres/maintenance',
+        'parametres/securite',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Support',
       items: [
+        'support/a-propos',
         'support/depannage',
       ],
     },

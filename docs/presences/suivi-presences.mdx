@@ -1,12 +1,154 @@
+---
+sidebar_position: 1
+---
+
 # Suivi des présences
 
-Le suivi des présences permet d’enregistrer les passages ou les pointages des membres et visiteurs.
+Le module **Présences** permet d’enregistrer rapidement les passages des membres et visiteurs.
 
-<img src="/clubmanager/img/docs/presences/01.png" alt="Présences ClubManager" />
+Il est conçu pour être utilisé à l’accueil du club, avec ou sans scanner.
 
-## Utilisations possibles
+---
 
-- Suivi des visites
-- Pointage à l’entrée
-- Historique des présences
-- Statistiques d’utilisation
+## 🖥️ Accès au module
+
+👉 **Présences → Punch / Accueil**
+
+<img src="/clubmanager/img/docs/presences/01.png" alt="Module Présences ClubManager" />
+
+---
+
+## ⚙️ Types d’enregistrement
+
+Deux modes sont disponibles :
+
+- **Membre**
+- **Non-membre**
+
+---
+
+# 👤 Enregistrer un membre
+
+## 🔳 Méthode 1 : Scan QR Code (recommandé)
+
+Scannez la carte membre :
+
+👉 le punch est **immédiat** si l'option est désactivée dans les paramètres, sinon, une validation manuelle sera demandée :
+
+<img src="/clubmanager/img/docs/presences/03.png" alt="Demande de validation" />
+
+---
+
+## ⌨️ Méthode 2 : Numéro manuel
+
+Entrez le numéro du membre :
+
+<img src="/clubmanager/img/docs/presences/02.png" alt="Entrée manuelle membre" />
+
+Cliquez sur **Valider**
+
+---
+
+## ✅ Confirmation (optionnelle)
+
+Selon la configuration, une confirmation peut être demandée :
+
+<img src="/clubmanager/img/docs/presences/03.png" alt="Confirmation punch membre" />
+
+---
+
+# ⚠️ Détection de doublon
+
+Si un punch récent existe :
+
+<img src="/clubmanager/img/docs/presences/08.png" alt="Doublon punch" />
+
+👉 Cela évite :
+
+- les erreurs de scan
+- les doubles enregistrements
+
+Le délai de détection des doublons est configurable dans les paramètres de l’application.
+
+---
+
+# 👥 Enregistrer un non-membre
+
+Sélectionnez **Non-membre** :
+
+<img src="/clubmanager/img/docs/presences/05.png" alt="Formulaire non membre" />
+
+Remplissez :
+
+- prénom
+- nom
+- téléphone
+
+Puis cliquez sur **Valider**
+
+---
+
+# 📊 Historique des présences
+
+<img src="/clubmanager/img/docs/presences/06.png" alt="Historique des présences" />
+
+Le tableau affiche :
+
+- Date / Heure  
+- Nom  
+- Statut (membre ou non)  
+- Méthode  
+- Téléphone (protégé par mot de passe)  
+- Notes  
+
+---
+
+## 🔎 Navigation dans l’historique
+
+Vous pouvez :
+
+- changer la période (jour, mois…)  
+- naviguer entre les dates  
+- actualiser la liste  
+- supprimer des entrées  
+
+---
+
+# 🔐 Sécurité
+
+Certaines actions peuvent être protégées :
+
+<img src="/clubmanager/img/docs/presences/07.png" alt="Sécurité mot de passe" />
+
+👉 Exemple :
+
+- suppression d’une présence
+- actions sensibles
+
+---
+
+# 🎯 Cas d'utilisation
+
+Le module permet de :
+
+- gérer l’accueil des membres ;
+- enregistrer les visiteurs ;
+- suivre la fréquentation ;
+- analyser les présences dans le temps.
+
+---
+
+# 💡 Bonnes pratiques
+
+- utiliser un **scanner QR** pour plus de rapidité ;
+- éviter les saisies manuelles si possible ;
+- vérifier les doublons ;
+- utiliser l’historique pour suivi et contrôle.
+
+---
+
+# 🔗 Lien avec les cartes membres
+
+Les cartes membres permettent un scan rapide :
+
+👉 [Cartes membres](/clubmanager/documentation/membres/cartes-membres)

@@ -4,17 +4,156 @@ sidebar_position: 3
 
 # Première configuration
 
-L’assistant de configuration permet de préparer l’application selon les informations de votre organisation.
+La première configuration permet de préparer ClubManager selon les besoins de votre organisation.
 
-## Informations recommandées
+Cette étape est importante, car elle définit la base de données utilisée, les informations de l’organisation, les options de sécurité et les modules actifs.
 
-- Nom du club ou de l’association
-- Adresse
-- Téléphone
-- Courriel
-- Logo
-- Préférences d’affichage
-- Informations utilisées dans les rapports
+---
 
-<img src="/clubmanager/img/docs/configuration/01.png" alt="Assistant de configuration" />
-<img src="/clubmanager/img/docs/configuration/02.png" alt="Configuration des informations" />
+## Ouvrir l’assistant de configuration
+
+Au premier lancement, ClubManager affiche l’assistant de configuration initiale.
+
+<img src="/clubmanager/img/docs/configuration/01.png" alt="Assistant de configuration ClubManager" />
+
+---
+
+## 1. Choisir le type de base de données
+
+ClubManager peut utiliser deux types de base de données.
+
+### SQLite local
+
+L’option **SQLite local** est recommandée pour une utilisation simple sur un seul ordinateur.
+
+<img src="/clubmanager/img/docs/configuration/02.png" alt="Configuration SQLite local" />
+
+Cette option est idéale si :
+
+- vous utilisez ClubManager sur un seul poste ;
+- vous souhaitez une configuration simple ;
+- vous ne voulez pas configurer de serveur externe.
+
+### PostgreSQL / Supabase
+
+L’option **PostgreSQL / Supabase** permet de connecter ClubManager à une base de données distante.
+
+<img src="/clubmanager/img/docs/configuration/03.png" alt="Configuration PostgreSQL ou Supabase" />
+
+Cette option est utile si :
+
+- vous souhaitez partager les données entre plusieurs postes ;
+- vous utilisez une base PostgreSQL existante ;
+- vous souhaitez héberger les données dans un service comme Supabase.
+
+Les informations nécessaires sont :
+
+- hôte ;
+- port ;
+- nom de la base de données ;
+- nom d’utilisateur ;
+- mot de passe.
+
+---
+
+## 2. Tester la connexion
+
+Avant d’initialiser l’application, cliquez sur **Tester la connexion**.
+
+<img src="/clubmanager/img/docs/configuration/08.png" alt="Connexion à la base de données valide" />
+
+Si tout est correct, un message confirme que la connexion à la base de données est valide.
+
+---
+
+## 3. Renseigner les informations de l’organisation
+
+Dans la section **Organisation**, indiquez le nom de votre club, association ou organisation.
+
+<img src="/clubmanager/img/docs/configuration/04.png" alt="Nom de l’organisation" />
+
+Ce nom pourra être utilisé dans l’application et dans certains rapports.
+
+---
+
+## 4. Ajouter les coordonnées et l’identité
+
+La section **Coordonnées et identité** permet de renseigner les informations générales de l’organisation.
+
+<img src="/clubmanager/img/docs/configuration/05.png" alt="Coordonnées et identité de l’organisation" />
+
+Vous pouvez indiquer :
+
+- un sous-titre ou slogan ;
+- l’adresse ;
+- le téléphone ;
+- l’adresse courriel ;
+- le site web ;
+- la devise utilisée.
+
+La devise par défaut est **CAD**.
+
+---
+
+## 5. Configurer la sécurité de base
+
+La section **Sécurité de base** permet d’activer certaines protections dans l’application.
+
+<img src="/clubmanager/img/docs/configuration/06.png" alt="Sécurité de base ClubManager" />
+
+Options disponibles :
+
+- **Activer la protection générale de l’application au démarrage**  
+  Demande un mot de passe au lancement de l’application.
+
+- **Demander le mot de passe pour les actions sensibles**  
+  Protège certaines opérations importantes.
+
+- **Protéger l’accès à la liste des membres**  
+  Restreint l’accès aux informations des membres.
+
+Vous pouvez aussi définir un **mot de passe initial admin**.
+
+---
+
+## 6. Choisir les modules actifs
+
+La section **Modules activés** permet de choisir les parties de ClubManager que vous souhaitez utiliser.
+
+<img src="/clubmanager/img/docs/configuration/07.png" alt="Modules activés ClubManager" />
+
+Modules disponibles :
+
+- Membres ;
+- Présences ;
+- Finances ;
+- Rapports ;
+- Sauvegardes ;
+- Paramètres.
+
+Vous pouvez désactiver les modules inutiles pour simplifier l’interface selon votre utilisation.
+
+---
+
+## 7. Initialiser l’application
+
+Une fois les informations vérifiées, cliquez sur **Initialiser l’application**.
+
+<img src="/clubmanager/img/docs/configuration/09.png" alt="Application initialisée avec succès" />
+
+Un message confirme que l’application a été initialisée avec succès.
+
+---
+
+## Après la configuration
+
+Après l’initialisation, ClubManager est prêt à être utilisé.
+
+Vous pouvez ensuite commencer par :
+
+- ajouter vos premiers membres ;
+- configurer vos paramètres avancés ;
+- enregistrer vos premières présences ;
+- suivre vos premières transactions.
+
+👉 [Ajouter un membre](/clubmanager/documentation/membres/ajouter-un-membre)
