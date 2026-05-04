@@ -23,6 +23,13 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Présences',
+      items: [
+        'presences/suivi-presences',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Transactions',
       items: [
         'transactions/gestion-transactions',
@@ -31,9 +38,10 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: 'Présences',
+      label: 'Infolettre',
       items: [
-        'presences/suivi-presences',
+        'infolettre/index',
+        'infolettre/configuration-cloudflare-worker',
       ],
     },
     {

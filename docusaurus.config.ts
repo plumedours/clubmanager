@@ -42,35 +42,6 @@ const config: Config = {
       logo: undefined, // Enlever le logo par défaut
       title: undefined, // Enlever le titre par défaut
     },
-    footer: {
-      style: 'light', // Force le footer en mode light
-      links: [
-        {
-          title: '🏠 Navigation',
-          items: [
-            {label: 'Accueil', to: '/'},
-            {label: 'Obtenir l\'application', to: '/obtenir-clubmanager'},
-            {label: 'Documentation', to: '/documentation/intro'},
-          ],
-        },
-        {
-          title: '📚 Ressources',
-          items: [
-            {label: 'À propos', to: '/a-propos'},
-            {label: 'Contact', to: '/contact'},
-            {label: 'FAQ', to: '/faq'},
-            {label: 'Portfolio', href: 'https://plumedours.github.io/portfolio/'},
-          ],
-        },
-        {
-          title: '⚖️ Légal',
-          items: [
-            {label: 'Mentions légales', to: '/mentions-legales'},
-          ],
-        },
-      ],
-      copyright: `© ${new Date().getFullYear()} ClubManager - Développé avec ❤️ par Maxime Bory`,
-    },
     prism: { 
       theme: prismThemes.github, // Forcer le thème light pour le code
       darkTheme: prismThemes.github, // Même thème pour éviter le switch

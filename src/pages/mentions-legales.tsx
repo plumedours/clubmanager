@@ -176,7 +176,7 @@ export default function MentionsLegales(): React.ReactNode {
                 <p className="mt-4 text-slate-600">
                   Pour toute question concernant ces mentions légales, le projet ClubManager, ou vos données personnelles :<br />
                   Email : <a href="mailto:bory.maxime@gmail.com" className="text-blue-600 hover:underline">bory.maxime@gmail.com</a><br />
-                  Formulaire : <a href="https://forms.gle/3EGhFqtcWFD8rTiNA" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">Formulaire de contact</a>
+                  Formulaire : <a href="https://forms.gle/gbhjLEfzr83Y5XNm7" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">Formulaire de contact</a>
                 </p>
               </section>
 

@@ -158,7 +158,7 @@ export default function FAQ(): React.ReactNode {
                 </p>
                 <div className="mt-8 flex justify-center flex-wrap gap-4">
                     <a
-                    href="https://forms.gle/3EGhFqtcWFD8rTiNA"
+                    href="https://forms.gle/gbhjLEfzr83Y5XNm7"
                     target="_blank"
                     rel="noreferrer"
                     className="group relative inline-block overflow-hidden rounded-full bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-3 font-medium text-white shadow-md transition duration-300 ease-out hover:scale-105 hover:shadow-xl"

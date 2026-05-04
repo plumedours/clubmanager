@@ -1,0 +1,752 @@
+---
+sidebar_position: 2
+---
+
+# Configurer le Worker Cloudflare pour l’infolettre
+
+Cette page explique comment configurer l’inscription et la désinscription automatique de l’infolettre avec **Cloudflare Workers**, **Hyperdrive** et une base **PostgreSQL**.
+
+Ce guide est destiné à l’administrateur de l’application.
+
+---
+
+## Objectif
+
+Le Worker sert d’intermédiaire entre le site web public et la base PostgreSQL utilisée par ClubManager.
+
+Il permet de gérer deux actions :
+
+```text
+https://votresite.com/newsletter/subscribe
+https://votresite.com/newsletter/unsubscribe?token=TOKEN
+```
+
+Le site web utilise le Worker pour inscrire un visiteur à l’infolettre.
+ClubManager utilise le Worker pour permettre à un abonné de se désinscrire depuis un lien présent dans le courriel.
+
+---
+
+## Architecture
+
+```text
+Site web React / Docusaurus
+        ↓
+Cloudflare Worker
+        ↓
+Cloudflare Hyperdrive
+        ↓
+Base PostgreSQL
+        ↓
+ClubManager WinForms
+```
+
+:::warning Important
+Cette fonctionnalité nécessite une base PostgreSQL en ligne.
+Elle ne peut pas fonctionner automatiquement avec une base SQLite locale.
+:::
+
+---
+
+## Prérequis
+
+Avant de commencer, vous devez avoir :
+
+- un compte Cloudflare ;
+- un domaine ajouté dans Cloudflare ;
+- les nameservers du domaine configurés chez le registraire ;
+- une base PostgreSQL accessible en ligne ;
+- ClubManager connecté à cette base PostgreSQL ;
+- Node.js installé sur votre ordinateur ;
+- un terminal PowerShell ou équivalent.
+
+<img src="/clubmanager/img/docs/cloudflare/01.png" alt="Cloudflare 1" />
+
+<img src="/clubmanager/img/docs/cloudflare/02.png" alt="Cloudflare 2" />
+
+---
+
+## Étape 1 — Ajouter le domaine dans Cloudflare
+
+1. Connectez-vous à Cloudflare.
+2. Cliquez sur **Add a site**.
+3. Entrez uniquement le domaine, par exemple :
+
+```text
+votresite.com
+```
+
+N’entrez pas :
+
+```text
+https://votresite.com/#/
+```
+
+4. Choisissez le plan souhaité.
+5. Cloudflare fournit deux nameservers.
+6. Remplacez les nameservers chez votre registraire.
+
+<img src="/clubmanager/img/docs/cloudflare/03.png" alt="Nameserver" />
+
+La propagation peut prendre de quelques minutes à plusieurs heures.
+Lorsque le domaine est prêt, son statut devient **Active**.
+
+---
+
+## Étape 2 — Créer le Worker
+
+Dans Cloudflare :
+
+1. Allez dans **Workers & Pages**.
+2. Cliquez sur **Create application**.
+3. Choisissez **Worker only**.
+4. Donnez un nom au Worker, par exemple :
+
+```text
+newsletter-worker
+```
+
+5. Déployez une première version simple.
+
+<img src="/clubmanager/img/docs/cloudflare/04.png" alt="Worker" />
+
+<img src="/clubmanager/img/docs/cloudflare/05.png" alt="Worker" />
+
+---
+
+## Étape 3 — Créer la configuration Hyperdrive
+
+Hyperdrive permet au Worker de se connecter à PostgreSQL.
+
+Dans Cloudflare :
+
+1. Allez dans **Storage & Databases**.
+2. Cliquez sur **Hyperdrive**.
+3. Cliquez sur **Create configuration**.
+4. Choisissez **Connect to public database** si votre PostgreSQL est accessible depuis Internet.
+5. Renseignez les informations de connexion :
+
+| Champ | Description |
+|---|---|
+| Host | Adresse du serveur PostgreSQL |
+| Port | Généralement `5432` |
+| Database | Nom de la base |
+| Username | Nom d’utilisateur |
+| Password | Mot de passe |
+
+<img src="/clubmanager/img/docs/cloudflare/06.png" alt="Hyperdrive" />
+
+<img src="/clubmanager/img/docs/cloudflare/07.png" alt="Hyperdrive" />
+
+:::tip
+Si votre base PostgreSQL n’est pas accessible publiquement, il faudra utiliser une configuration privée ou un tunnel adapté.
+:::
+
+---
+
+## Étape 4 — Ajouter le binding Hyperdrive au Worker
+
+Dans le Worker :
+
+1. Ouvrez **Settings**.
+2. Allez dans **Bindings**.
+3. Ajoutez un binding **Hyperdrive**.
+4. Utilisez exactement ce nom de variable :
+
+```text
+HYPERDRIVE
+```
+
+5. Sélectionnez la configuration Hyperdrive créée précédemment.
+
+<img src="/clubmanager/img/docs/cloudflare/08.png" alt="Binding Hyperdrive" />
+
+<img src="/clubmanager/img/docs/cloudflare/09.png" alt="Binding Hyperdrive" />
+
+---
+
+## Étape 5 — Créer le projet Worker en local
+
+Le Worker utilise un package npm, il doit donc être déployé depuis un projet local avec Wrangler.
+
+Dans PowerShell :
+
+```powershell
+npm create cloudflare@latest newsletter-worker
+cd newsletter-worker
+npm install pg
+npx wrangler login
+```
+
+Pendant la création, choisissez :
+
+```text
+Worker only
+```
+
+---
+
+## Étape 6 — Configurer `wrangler.jsonc`
+
+Ouvrez le fichier :
+
+```text
+wrangler.jsonc
+```
+
+Exemple de configuration :
+
+```jsonc
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "newsletter-worker",
+  "main": "src/index.js",
+  "compatibility_date": "2026-05-01",
+  "observability": {
+    "enabled": true
+  },
+  "upload_source_maps": true,
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+      "id": "VOTRE_ID_HYPERDRIVE"
+    }
+  ]
+}
+```
+
+Remplacez :
+
+```text
+VOTRE_ID_HYPERDRIVE
+```
+
+par l’identifiant de votre configuration Hyperdrive.
+
+<img src="/clubmanager/img/docs/cloudflare/10.png" alt="ID Hyperdrive" />
+
+---
+
+## Étape 7 — Code complet du Worker
+
+Remplacez le contenu de :
+
+```text
+src/index.js
+```
+
+par le code suivant :
+
+```js
+import pg from "pg";
+
+const { Client } = pg;
+const SITE_URL = "https://votresite.com";
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+
+    const corsHeaders = {
+      "Access-Control-Allow-Origin": SITE_URL,
+      "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Accept",
+      "Content-Type": "application/json; charset=utf-8",
+    };
+
+    if (request.method === "OPTIONS") {
+      return new Response(null, { status: 204, headers: corsHeaders });
+    }
+
+    if (url.pathname === "/newsletter/subscribe") {
+      return handleSubscribe(request, env, corsHeaders);
+    }
+
+    if (url.pathname === "/newsletter/unsubscribe") {
+      return handleUnsubscribe(url, env);
+    }
+
+    return json({ status: "not_found" }, 404, corsHeaders);
+  },
+};
+
+async function handleSubscribe(request, env, headers) {
+  if (request.method !== "POST") {
+    return json({ status: "invalid" }, 405, headers);
+  }
+
+  let body;
+
+  try {
+    body = await request.json();
+  } catch {
+    return json({ status: "invalid" }, 400, headers);
+  }
+
+  const email = cleanEmail(body.email);
+  const firstName = cleanText(body.firstName, 120);
+  const lastName = cleanText(body.lastName, 120);
+  const phone = cleanText(body.phone, 60);
+  const consent = body.consent === true;
+  const honeypot = cleanText(body.website, 200);
+
+  // Champ caché anti-robot : si rempli, on répond succès sans écrire en base.
+  if (honeypot) {
+    return json({ status: "success" }, 200, headers);
+  }
+
+  if (!isValidEmail(email) || !consent) {
+    return json({ status: "invalid" }, 400, headers);
+  }
+
+  const client = new Client({
+    connectionString: env.HYPERDRIVE.connectionString,
+  });
+
+  try {
+    await client.connect();
+
+    const ip =
+      request.headers.get("CF-Connecting-IP") ||
+      request.headers.get("X-Forwarded-For") ||
+      "";
+
+    const token =
+      crypto.randomUUID().replaceAll("-", "") +
+      crypto.randomUUID().replaceAll("-", "");
+
+    await client.query(
+      `
+      INSERT INTO "NewsletterSubscribers"
+      (
+        "Email",
+        "FirstName",
+        "LastName",
+        "Phone",
+        "ConsentGiven",
+        "ConsentGivenAt",
+        "ConsentSource",
+        "ConsentIp",
+        "IsActive",
+        "UnsubscribedAt",
+        "UnsubscribeToken",
+        "CreatedAt",
+        "UpdatedAt",
+        "IsDeleted",
+        "DeletedAt"
+      )
+      VALUES
+      (
+        $1, $2, $3, $4,
+        true,
+        NOW(),
+        'Site web',
+        $5,
+        true,
+        NULL,
+        $6,
+        NOW(),
+        NOW(),
+        false,
+        NULL
+      )
+      ON CONFLICT ("Email")
+      DO UPDATE SET
+        "FirstName" = EXCLUDED."FirstName",
+        "LastName" = EXCLUDED."LastName",
+        "Phone" = EXCLUDED."Phone",
+        "ConsentGiven" = true,
+        "ConsentGivenAt" = NOW(),
+        "ConsentSource" = 'Site web',
+        "ConsentIp" = EXCLUDED."ConsentIp",
+        "IsActive" = true,
+        "UnsubscribedAt" = NULL,
+        "UpdatedAt" = NOW(),
+        "IsDeleted" = false,
+        "DeletedAt" = NULL
+      `,
+      [email, firstName, lastName, phone, ip, token]
+    );
+
+    return json({ status: "success" }, 200, headers);
+  } catch (error) {
+    console.error("Subscribe error:", error);
+    return json({ status: "error" }, 500, headers);
+  } finally {
+    await client.end();
+  }
+}
+
+async function handleUnsubscribe(url, env) {
+  const token = url.searchParams.get("token");
+
+  if (!token || token.length < 20) {
+    return Response.redirect(
+      `${SITE_URL}/#/newsletter/unsubscribe?status=invalid`,
+      302
+    );
+  }
+
+  const client = new Client({
+    connectionString: env.HYPERDRIVE.connectionString,
+  });
+
+  try {
+    await client.connect();
+
+    const result = await client.query(
+      `
+      UPDATE "NewsletterSubscribers"
+      SET
+        "IsActive" = false,
+        "UnsubscribedAt" = NOW(),
+        "UpdatedAt" = NOW()
+      WHERE "UnsubscribeToken" = $1
+        AND "IsDeleted" = false
+      RETURNING "Id"
+      `,
+      [token]
+    );
+
+    if (result.rowCount === 0) {
+      return Response.redirect(
+        `${SITE_URL}/#/newsletter/unsubscribe?status=invalid`,
+        302
+      );
+    }
+
+    return Response.redirect(
+      `${SITE_URL}/#/newsletter/unsubscribe?status=success`,
+      302
+    );
+  } catch (error) {
+    console.error("Unsubscribe error:", error);
+    return Response.redirect(
+      `${SITE_URL}/#/newsletter/unsubscribe?status=error`,
+      302
+    );
+  } finally {
+    await client.end();
+  }
+}
+
+function json(data, status, headers) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers,
+  });
+}
+
+function cleanEmail(value) {
+  return String(value || "").trim().toLowerCase();
+}
+
+function cleanText(value, maxLength) {
+  return String(value || "").trim().slice(0, maxLength);
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 320;
+}
+```
+
+Remplacez :
+
+```js
+const SITE_URL = "https://votresite.com";
+```
+
+par votre vrai domaine.
+
+---
+
+## Étape 8 — Déployer le Worker
+
+Dans le dossier du Worker :
+
+```powershell
+npx wrangler deploy
+```
+
+Si le déploiement réussit, Wrangler affiche une URL du type :
+
+```text
+https://newsletter-worker.votre-compte.workers.dev
+```
+
+---
+
+## Étape 9 — Ajouter la route Cloudflare
+
+Dans Cloudflare :
+
+1. Ouvrez **Workers & Pages**.
+2. Cliquez sur votre Worker.
+3. Allez dans **Settings > Domains & Routes**.
+4. Ajoutez une route :
+
+```text
+votresite.com/newsletter/*
+```
+
+5. Associez cette route au Worker.
+
+<img src="/clubmanager/img/docs/cloudflare/11.png" alt="Routes Cloudflare" />
+
+:::important
+Le domaine doit être actif dans Cloudflare et le DNS doit être proxifié pour que la route fonctionne correctement.
+:::
+
+---
+
+## Étape 10 — Configurer ClubManager
+
+Dans ClubManager :
+
+👉 **Infolettre > Réglages**
+
+Renseignez l’URL de désinscription :
+
+```text
+https://votresite.com/newsletter/unsubscribe
+```
+
+N’ajoutez pas `?token=`.
+
+<img src="/clubmanager/img/docs/parametres/08.png" alt="Binding Hyperdrive" />
+
+---
+
+:::warning
+### Route React (HashRouter)
+Si votre site web utilise un routeur React de type **HashRouter** (URL avec `#/`), il est important de bien comprendre le fonctionnement des routes.
+
+Exemple :
+```
+https://votresite.com/#/newsletter/unsubscribe
+```
+
+👉 Dans ce cas, tout ce qui se trouve après `#` est **géré uniquement par React côté navigateur**.  
+Le serveur (et donc Cloudflare Worker) **ne voit pas cette partie de l’URL**.
+
+❗ Cela signifie que cette URL ne fonctionnera **pas** pour la désinscription :
+```
+https://votresite.com/#/newsletter/unsubscribe?token=XXX
+```
+
+Le Worker ne recevra jamais le `token`.
+
+---
+
+### Solution recommandée
+
+Utilisez une vraie route côté serveur pour intercepter la requête :
+
+```
+https://votresite.com/newsletter/unsubscribe?token=XXX
+```
+
+👉 Cette route sera captée par le **Cloudflare Worker**, qui pourra traiter le token et effectuer la désinscription.
+
+Ensuite, le Worker redirigera vers votre site React :
+
+```
+https://votresite.com/#/newsletter/unsubscribe?status=success
+```
+
+---
+
+### Résumé
+
+- `#/...` → React uniquement (frontend)
+- `/newsletter/...` → Worker / backend (obligatoire pour le traitement)
+
+:::
+
+---
+
+## Étape 11 — Tester l’inscription depuis le site
+
+Depuis la page d’inscription du site :
+
+```text
+https://votresite.com/#/newsletter/subscribe
+```
+
+ou selon votre configuration de routage.
+
+Inscrivez une adresse test.
+
+Vérifiez ensuite dans PostgreSQL :
+
+```sql
+SELECT
+  "Id",
+  "Email",
+  "FirstName",
+  "LastName",
+  "ConsentGiven",
+  "ConsentSource",
+  "IsActive",
+  "CreatedAt",
+  "UpdatedAt"
+FROM "NewsletterSubscribers"
+ORDER BY "UpdatedAt" DESC
+LIMIT 10;
+```
+
+L’adresse doit apparaître dans la table.
+
+---
+
+## Étape 12 — Tester la désinscription
+
+Depuis ClubManager :
+
+1. Envoyez un courriel test.
+2. Ouvrez le courriel reçu.
+3. Cliquez sur **Se désinscrire**.
+4. Vérifiez que la page de confirmation s’affiche.
+5. Vérifiez dans la base que l’abonné est devenu inactif.
+
+Requête de vérification :
+
+```sql
+SELECT
+  "Email",
+  "IsActive",
+  "UnsubscribedAt",
+  "UpdatedAt"
+FROM "NewsletterSubscribers"
+ORDER BY "UpdatedAt" DESC
+LIMIT 10;
+```
+
+---
+
+## Sécurité anti-abus
+
+Le Worker contient plusieurs protections simples :
+
+- validation du format du courriel ;
+- obligation du consentement ;
+- champ caché anti-robot `website` ;
+- nettoyage des champs texte ;
+- limitation de longueur des champs ;
+- CORS limité au domaine du site ;
+- token unique de désinscription.
+
+### Protection recommandée en plus
+
+Pour une installation publique avec beaucoup de trafic, il est recommandé d’ajouter :
+
+- Turnstile Cloudflare sur le formulaire d’inscription ;
+- rate limiting Cloudflare ;
+- double opt-in par courriel ;
+- journalisation des erreurs Worker ;
+- surveillance des requêtes dans Cloudflare.
+
+---
+
+## Dépannage
+
+### Le formulaire affiche une erreur temporaire
+
+Vérifiez :
+
+- la route Cloudflare ;
+- le Worker déployé ;
+- le binding `HYPERDRIVE` ;
+- la connexion PostgreSQL ;
+- les logs du Worker.
+
+Pour afficher les logs :
+
+```powershell
+npx wrangler tail
+```
+
+---
+
+### L’inscription fonctionne, mais rien n’apparaît dans ClubManager
+
+Vérifiez que :
+
+- le Worker écrit dans la bonne base ;
+- ClubManager utilise la même base PostgreSQL ;
+- vous rechargez la liste des abonnés ;
+- l’adresse n’est pas filtrée ou supprimée.
+
+---
+
+### Le lien de désinscription affiche une page blanche
+
+Vérifiez que le lien n’utilise pas une route React directe comme :
+
+```text
+https://votresite.com/#/unsubscribe?token=...
+```
+
+Le bon lien doit passer par le Worker :
+
+```text
+https://votresite.com/newsletter/unsubscribe?token=...
+```
+
+---
+
+### Erreur `No such module "postgres"`
+
+Cette erreur apparaît si le code utilisant un package npm est collé directement dans l’éditeur web de Cloudflare.
+
+La solution est de déployer le Worker depuis un projet local avec :
+
+```powershell
+npm install pg
+npx wrangler deploy
+```
+
+---
+
+### Erreur Hyperdrive introuvable
+
+Vérifiez que le nom du binding est exactement :
+
+```text
+HYPERDRIVE
+```
+
+Le code utilise :
+
+```js
+env.HYPERDRIVE.connectionString
+```
+
+Le nom doit donc correspondre parfaitement.
+
+---
+
+## Résumé des éléments à configurer
+
+| Élément | Valeur recommandée |
+|---|---|
+| Route Cloudflare | `votresite.com/newsletter/*` |
+| URL désinscription ClubManager | `https://votresite.com/newsletter/unsubscribe` |
+| Binding Hyperdrive | `HYPERDRIVE` |
+| Page inscription site | `/#/newsletter/subscribe` |
+| Page désinscription site | `/#/newsletter/unsubscribe` |
+| Base requise | PostgreSQL en ligne |
+
+---
+
+## Après configuration
+
+Une fois la configuration terminée :
+
+- les visiteurs peuvent s’inscrire depuis le site web ;
+- les abonnés apparaissent dans ClubManager ;
+- les courriels contiennent un lien de désinscription ;
+- la désinscription met automatiquement à jour la base PostgreSQL ;
+- ClubManager peut gérer les abonnés, listes et campagnes depuis l’application.

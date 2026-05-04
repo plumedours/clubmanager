@@ -1,0 +1,353 @@
+---
+sidebar_position: 1
+---
+
+# Module Infolettre
+
+Le module **Infolettre** permet de gérer les abonnés, les listes de diffusion et l’envoi de courriels depuis ClubManager.
+
+Il est conçu pour envoyer des communications aux membres, aux visiteurs ou à toute personne ayant donné son consentement à recevoir l’infolettre.
+
+---
+
+## Prérequis
+
+Avant d’utiliser le module Infolettre, vérifiez les éléments suivants :
+
+- le module **Infolettre** est activé dans les paramètres de l’application ;
+- les paramètres SMTP sont configurés dans **Paramètres > E-mail** ;
+- le logo et les coordonnées de l’organisation sont configurés dans **Paramètres > Organisation** ;
+- pour la désinscription automatique par lien, une base **PostgreSQL en ligne** et un **Cloudflare Worker** doivent être configurés.
+
+:::warning Important
+La désinscription automatique ne peut pas modifier une base SQLite locale depuis Internet.
+Pour que les liens de désinscription fonctionnent automatiquement, ClubManager doit utiliser une base PostgreSQL accessible en ligne.
+:::
+
+---
+
+## Activer ou désactiver le module
+
+Le module Infolettre peut être activé ou désactivé selon les besoins de l’organisation.
+
+Lorsqu’il est désactivé, le menu **Infolettre** n’est pas affiché dans l’application.
+
+### Depuis l’assistant de configuration
+
+Lors du premier lancement, l’assistant permet de choisir les modules actifs.
+
+<img src="/clubmanager/img/docs/configuration/01.png" alt="Paramètres Application" />
+
+### Depuis les paramètres
+
+Vous pouvez aussi modifier ce choix plus tard :
+
+👉 **Paramètres > Application**
+
+Activez ou désactivez l’option **Infolettre**.
+
+<img src="/clubmanager/img/docs/parametres/03.png" alt="Paramètres Application" />
+
+---
+
+## Accéder au module
+
+Depuis le menu principal :
+
+👉 **Infolettre > Gestion de l’infolettre**
+
+<img src="/clubmanager/img/docs/infolettre/01.png" alt="Menu infolettre" />
+
+L’écran est organisé en plusieurs onglets :
+
+- **Abonnés** ;
+- **Listes** ;
+- **Campagnes** ;
+- **Réglages**.
+
+---
+
+## Onglet Abonnés
+
+L’onglet **Abonnés** permet de gérer les personnes inscrites à l’infolettre.
+
+<img src="/clubmanager/img/docs/infolettre/onglet-abonnes.png" alt="Infolettre abonné" />
+
+### Informations disponibles
+
+Chaque abonné peut contenir :
+
+- courriel ;
+- prénom ;
+- nom ;
+- téléphone ;
+- consentement ;
+- statut actif ou inactif ;
+- date de consentement ;
+- date de désinscription.
+
+### Ajouter un abonné manuellement
+
+1. Cliquez sur **Nouveau**.
+2. Saisissez le courriel.
+3. Renseignez les informations optionnelles.
+4. Cochez **Consentement reçu** si la personne a accepté de recevoir l’infolettre.
+5. Cliquez sur **Enregistrer**.
+
+<img src="/clubmanager/img/docs/infolettre/pop-add-abonne.png" alt="Paramètres Application" />
+
+### Modifier un abonné
+
+1. Sélectionnez un abonné dans le tableau.
+2. Cliquez sur Modifier ou double-clic sur l'abonné dans le tableau.
+3. Modifiez les champs souhaités.
+4. Cliquez sur **Enregistrer**.
+
+### Supprimer un abonné
+
+1. Sélectionnez un abonné.
+2. Cliquez sur **Supprimer**.
+3. Confirmez la suppression.
+
+:::tip Conseil
+Si une personne ne souhaite plus recevoir l’infolettre, il est souvent préférable de la rendre inactive plutôt que de supprimer complètement son historique.
+:::
+
+---
+
+## Onglet Listes
+
+Les listes permettent de regrouper les abonnés par type de communication.
+
+Exemples :
+
+- Tous les membres ;
+- Parents ;
+- Bénévoles ;
+- Événements ;
+- Promotions ;
+- Nouvelles générales.
+
+<img src="/clubmanager/img/docs/infolettre/onglet-listes.png" alt="Infolettre Listes" />
+
+### Créer une liste
+
+1. Ouvrez l’onglet **Listes**.
+2. Cliquez sur **Nouvelle**.
+3. Donnez un nom à la liste.
+4. Ajoutez une description si nécessaire.
+5. Cliquez sur **Enregistrer**.
+
+<img src="/clubmanager/img/docs/infolettre/pop-add-liste.png" alt="Infolettre Ajouter Liste" />
+
+### Ajouter des abonnés à une liste
+
+Depuis la gestion des abonnés, sélectionnez l’abonné puis choisissez les listes auxquelles il doit appartenir.
+
+<img src="/clubmanager/img/docs/infolettre/pop-add-abonne.png" alt="Infolettre Ajouter abonne liste" />
+
+
+---
+
+## Onglet Campagnes
+
+L’onglet **Campagnes** affiche l’historique des infolettres envoyées.
+
+<img src="/clubmanager/img/docs/infolettre/onglet-campagnes.png" alt="Infolettre Campagnes" />
+
+Le tableau permet de consulter :
+
+- le sujet ;
+- le statut ;
+- la date de création ;
+- la date d’envoi ;
+- le nombre de destinataires ;
+- le nombre de succès ;
+- le nombre d’échecs.
+
+---
+
+## Rédiger une nouvelle campagne
+
+Depuis l’onglet **Campagnes**, cliquez sur **Nouvelle campagne**.
+
+Une fenêtre dédiée s’ouvre pour rédiger le courriel.
+
+<img src="/clubmanager/img/docs/infolettre/pop-add-campagne.png" alt="Infolettre ajouter campagne" />
+
+La fenêtre contient :
+
+- choix de la liste de diffusion ;
+- courriel de test ;
+- sujet du courriel ;
+- éditeur de contenu ;
+- aperçu final ;
+- bouton d’envoi test ;
+- bouton d’envoi réel.
+
+---
+
+## Éditeur de contenu
+
+L’éditeur permet de rédiger le contenu principal du message.
+
+Le header, le footer, le logo de l’organisation et le lien de désinscription sont ajoutés automatiquement par ClubManager.
+
+### Actions disponibles
+
+- **Gras** ;
+- **Italique** ;
+- **Souligné** ;
+- **Titre** ;
+- **Liste** ;
+- **Lien** ;
+- **Bonjour** ;
+- **Variable prénom**.
+
+---
+
+## Variables disponibles
+
+Certaines variables peuvent être insérées dans le contenu.
+
+| Variable | Description |
+|---|---|
+| `{{FirstName}}` | Prénom du destinataire |
+| `{{LastName}}` | Nom du destinataire |
+| `{{Email}}` | Courriel du destinataire |
+| `{{UnsubscribeLink}}` | Lien de désinscription |
+| `{{ClubName}}` | Nom de l’organisation |
+
+Exemple :
+
+```html
+<p>Bonjour {{FirstName}},</p>
+<p>Voici les nouvelles du club pour cette semaine.</p>
+```
+
+Au moment de l’envoi, ClubManager remplace automatiquement les variables par les données du destinataire.
+
+---
+
+## Aperçu du courriel
+
+Le bouton **Aperçu** génère le rendu final du courriel.
+
+L’aperçu doit correspondre au courriel reçu par le destinataire :
+
+- logo ;
+- contenu ;
+- mise en page HTML ;
+- footer ;
+- lien de désinscription.
+
+<img src="/clubmanager/img/docs/infolettre/pop-add-campagne-apercu_1.png" alt="Infolettre apercu mail 1" />
+
+<img src="/clubmanager/img/docs/infolettre/pop-add-campagne-apercu_2.png" alt="Infolettre apercu mail 2" />
+
+
+:::note
+Selon le logiciel de courriel utilisé par le destinataire, l’affichage peut varier légèrement.
+Certains clients de messagerie appliquent leurs propres règles de rendu HTML.
+:::
+
+---
+
+## Envoyer un courriel test
+
+Avant d’envoyer une campagne réelle, il est recommandé d’envoyer un test.
+
+1. Saisissez un courriel dans le champ **Courriel test**.
+2. Cliquez sur **Test**.
+3. Vérifiez le rendu dans la boîte courriel.
+4. Corrigez le contenu si nécessaire.
+
+---
+
+## Envoyer une campagne
+
+Lorsque le courriel est prêt :
+
+1. Choisissez la liste de diffusion.
+2. Vérifiez le sujet.
+3. Cliquez sur **Envoyer**.
+4. Confirmez l’envoi.
+
+ClubManager envoie le courriel aux abonnés actifs ayant donné leur consentement.
+
+**IMAGE ICI : capture de la confirmation d’envoi**
+
+---
+
+## Désinscription automatique
+
+Chaque courriel contient un lien de désinscription.
+
+Le lien doit pointer vers le Worker Cloudflare configuré, par exemple :
+
+```text
+https://votre-domaine.com/newsletter/unsubscribe?token=TOKEN
+```
+
+L’utilisateur est ensuite redirigé vers la page de confirmation du site web.
+
+**IMAGE ICI : capture de la page de confirmation de désinscription**
+
+---
+
+## Onglet Réglages
+
+L’onglet **Réglages** permet de définir l’URL de base utilisée pour les liens de désinscription.
+
+<img src="/clubmanager/img/docs/infolettre/05.png" alt="Infolettre Réglages" />
+
+:::important
+L'URL est géré par l'onglet Infolettre dans les paramètres de l'application
+:::
+
+---
+
+## Problèmes fréquents
+
+### Le courriel n’est pas envoyé
+
+Vérifiez :
+
+- la configuration SMTP ;
+- le sujet du courriel ;
+- la présence d’abonnés actifs ;
+- le consentement des destinataires ;
+- la connexion Internet.
+
+### Le logo n’apparaît pas
+
+Vérifiez que le logo est configuré dans les paramètres de l’organisation et que le fichier existe toujours sur l’ordinateur.
+
+### Le lien de désinscription ne fonctionne pas
+
+Vérifiez :
+
+- l’URL dans **Infolettre > Réglages** ;
+- la route Cloudflare ;
+- le Worker ;
+- la connexion Hyperdrive ;
+- la base PostgreSQL.
+
+### Les nouveaux inscrits du site web n’apparaissent pas
+
+Vérifiez que :
+
+- le site envoie bien vers le Worker ;
+- le Worker écrit dans la bonne base PostgreSQL ;
+- ClubManager est connecté à cette même base.
+
+---
+
+## Bonnes pratiques
+
+- Envoyez toujours un courriel test avant une campagne réelle.
+- Utilisez des listes pour mieux cibler vos communications.
+- Gardez le contenu court et lisible.
+- Évitez les images trop lourdes.
+- Assurez-vous que les destinataires ont donné leur consentement.
+- Conservez le lien de désinscription dans chaque courriel.

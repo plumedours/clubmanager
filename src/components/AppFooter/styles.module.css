@@ -1,0 +1,227 @@
+.footer {
+  margin-top: 0;
+  background:
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.12), transparent 36%),
+    linear-gradient(135deg, #f8fafc 0%, #ffffff 55%, #eff6ff 100%);
+  border-top: 1px solid #e2e8f0;
+  color: #334155;
+}
+
+.footerInner {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 56px 0 28px;
+}
+
+.brandSection {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+  padding: 28px;
+  border: 1px solid #dbeafe;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+.brandBadge {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #2563eb, #06b6d4);
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 1.35rem;
+  letter-spacing: -0.04em;
+  box-shadow: 0 18px 36px rgba(37, 99, 235, 0.28);
+}
+
+.brandTitle {
+  margin: 0 0 8px;
+  color: #0f172a;
+  font-size: clamp(1.6rem, 2vw, 2rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+.brandText {
+  max-width: 780px;
+  margin: 0;
+  color: #475569;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.primaryButton,
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-weight: 800;
+  text-decoration: none !important;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.primaryButton {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #2563eb, #06b6d4);
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.24);
+}
+
+.secondaryButton {
+  color: #1e293b !important;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+}
+
+.primaryButton:hover,
+.secondaryButton:hover {
+  transform: translateY(-2px);
+}
+
+.secondaryButton:hover {
+  border-color: #93c5fd;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.08);
+}
+
+.linksGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 34px;
+}
+
+.linkColumn {
+  padding: 22px;
+  border: 1px solid #e2e8f0;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.linkTitle {
+  position: relative;
+  display: inline-block;
+  margin: 0 0 18px;
+  color: #0f172a;
+  font-size: 0.86rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.linkTitle::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 34px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #2563eb, #06b6d4);
+}
+
+.linkList {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.footerLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #475569;
+  font-size: 0.94rem;
+  font-weight: 650;
+  text-decoration: none !important;
+  transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.footerLink:hover {
+  color: #2563eb;
+  transform: translateX(4px);
+}
+
+.externalIcon {
+  color: #94a3b8;
+  font-size: 0.82rem;
+}
+
+.bottomBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 34px;
+  padding-top: 24px;
+  border-top: 1px solid #e2e8f0;
+  color: #64748b;
+  font-size: 0.88rem;
+}
+
+.copyright,
+.signature {
+  margin: 0;
+}
+
+.signature {
+  text-align: right;
+}
+
+@media (max-width: 900px) {
+  .linksGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .bottomBar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .signature {
+    text-align: left;
+  }
+}
+
+@media (max-width: 640px) {
+  .footerInner {
+    width: min(100% - 28px, 1180px);
+    padding-top: 38px;
+  }
+
+  .brandSection {
+    grid-template-columns: 1fr;
+    padding: 22px;
+  }
+
+  .brandBadge {
+    width: 62px;
+    height: 62px;
+    border-radius: 18px;
+  }
+
+  .ctaRow {
+    flex-direction: column;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+  }
+}
