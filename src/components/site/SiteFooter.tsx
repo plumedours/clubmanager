@@ -28,7 +28,7 @@ export default function SiteFooter(): React.ReactNode {
           <Link to="/documentation/intro">Documentation</Link>
           <Link to="/faq">FAQ</Link>
           <Link to="/mentions-legales">Mentions légales</Link>
-          <Link to="/documentation/infolettre">Module infolettre</Link>
+          {/* <Link to="/documentation/infolettre">Module infolettre</Link> */}
         </div>
 
         <div>

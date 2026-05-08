@@ -88,6 +88,24 @@ export default function Home(): React.ReactNode {
         </div>
       </section>
 
+      <section className="site-section">
+  <div className="site-container">
+    <div className="site-trust-panel">
+      <span className="site-eyebrow">
+        Développement terrain
+      </span>
+
+      <h2>
+        Développé et utilisé dans un environnement réel.
+      </h2>
+
+      <p>
+        ClubManager évolue avec les besoins concrets d’un club actif afin d’améliorer continuellement l’expérience, les fonctionnalités et la stabilité du logiciel.
+      </p>
+    </div>
+  </div>
+</section>
+
       <section id="captures" className="site-section">
         <div className="site-container">
           <SectionTitle

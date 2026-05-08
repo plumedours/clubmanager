@@ -92,7 +92,7 @@ export default function ObtenirClubManager(): React.ReactNode {
               et organisations qui veulent un outil concret sans engagement complexe.
             </p>
           </div>
-          <Link to="/contact" className="site-button site-button--primary">Contacter le développeur</Link>
+          <Link to="/contact" className="site-button site-button--primary">Me contacter</Link>
         </div>
       </section>
     </SiteLayout>

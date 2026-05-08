@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import Layout from '@theme/Layout';
-import Link from '@docusaurus/Link';
-import Navbar from '../components/Navbar';
+import SiteLayout from '../components/site/SiteLayout';
 
 const faqItems = [
   {
     question: "Comment obtenir ClubManager ?",
-    answer: "ClubManager est accessible via une contribution libre. Rendez-vous sur la page 'Prix libre', choisissez votre contribution sur Ko-fi, puis contactez-moi via le formulaire ou par email pour recevoir les instructions d'installation et d'accès."
+    answer: "ClubManager est accessible via une contribution libre. Rendez-vous sur la page 'Obtenir l'application', choisissez votre contribution sur Ko-fi, puis contactez-moi via le formulaire ou par email pour recevoir les instructions d'installation et d'accès."
   },
   {
     question: "Quel est le prix du logiciel ?",
     answer: "ClubManager fonctionne avec un modèle de 'prix libre'. Vous choisissez le montant que vous souhaitez contribuer, selon vos moyens et l'utilisation que vous faites du logiciel. Il n'y a pas d'abonnement obligatoire."
   },
   {
-    question: "Quels sont les prérequis techniques ?",
-    answer: "ClubManager fonctionne sur Windows. Vous aurez besoin d'une base de données PostgreSQL (Neon, Supabase ou installation locale) et d'une connexion internet pour l'installation initiale. Une fois installé, le logiciel fonctionne localement. Vous pouvez également utiliser l'option SQLite et vous n'aurez pas besoin de connexion internet."
-  },
+  question: "Quels sont les prérequis techniques ?",
+  answer: "ClubManager fonctionne sur Windows. Vous pouvez utiliser une base SQLite pour une installation locale sur un seul ordinateur, ou PostgreSQL (Neon, Supabase, etc.) pour une installation réseau et multi-utilisateur."
+},
+{
+  question: "Une connexion internet est-elle nécessaire ?",
+  answer: "Non pour l’utilisation locale quotidienne avec SQLite. Cependant, une connexion internet est requise pour certaines fonctionnalités en ligne comme l’envoi de courriels, les cartes de membres par email, l’infolettre et certaines intégrations externes."
+},
   {
     question: "Le support est-il inclus ?",
     answer: "Le support est assuré quand je suis disponible. N'hésitez pas à poser vos questions par email ou via le formulaire de contact. Je m'efforce de répondre dans les meilleurs délais (généralement sous 48h)."
@@ -83,19 +85,17 @@ export default function FAQ(): React.ReactNode {
   };
 
   return (
-    <Layout 
+    <SiteLayout 
       title="FAQ - ClubManager" 
       description="Foire aux questions sur ClubManager - Réponses aux questions fréquentes sur l'installation, le prix, le support et plus encore."
     >
       <main className="min-h-screen bg-white">
-        <Navbar />
-
         {/* Hero Section */}
         <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
           <div className="absolute -top-40 -right-40 h-96 w-96 rounded-full bg-gradient-to-r from-blue-200/30 to-cyan-200/30 blur-3xl"></div>
           <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-gradient-to-r from-purple-200/20 to-pink-200/20 blur-3xl"></div>
           
-          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
             <div className="text-center animate-on-scroll">
               <h1 className="mt-6 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
                 Foire aux{' '}
@@ -148,53 +148,39 @@ export default function FAQ(): React.ReactNode {
             </div>
 
             {/* Section contact si question non trouvée */}
-            <div className="mt-12 text-center animate-on-scroll">
-              <div className="rounded-2xl bg-gradient-to-r from-blue-50 to-cyan-50 p-8">
-                <h3 className="text-xl font-bold text-slate-900">
-                  Vous n'avez pas trouvé votre réponse ?
-                </h3>
-                <p className="mt-2 text-slate-600">
-                  N'hésitez pas à me contacter directement, je vous répondrai dans les meilleurs délais.
-                </p>
-                <div className="mt-8 flex justify-center flex-wrap gap-4">
-                    <a
-                    href="https://forms.gle/gbhjLEfzr83Y5XNm7"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group relative inline-block overflow-hidden rounded-full bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-3 font-medium text-white shadow-md transition duration-300 ease-out hover:scale-105 hover:shadow-xl"
-                    style={{ transitionProperty: 'all', transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)' }}
-                    >
-                    <span className="relative z-10 text-white">Utiliser le formulaire →</span>
-                    <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-blue-500 to-cyan-500 transition-transform duration-500 group-hover:translate-x-0"></div>
-                    </a>
-                    <a
-                    href="mailto:borymaxime@gmail.com?subject=ClubManager%20-%20Demande%20d'information"
-                    className="inline-block rounded-full border-2 border-slate-200 bg-white px-6 py-3 font-medium text-slate-700 hover:border-blue-200 hover:bg-blue-50 hover:scale-105"
-                    style={{ 
-                        transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                        transformOrigin: 'center'
-                    }}
-                    >
-                    Envoyer un email
-                    </a>
-                </div>
-              </div>
-            </div>
+            <div className="mt-12">
+  <section className="site-cta-panel animate-on-scroll">
+    <div>
+      <span className="site-eyebrow">Besoin d’aide ?</span>
+      <h2>Vous n’avez pas trouvé votre réponse ?</h2>
+      <p>
+        Contactez-moi directement via le formulaire ou par email. Je vous répondrai
+        dans les meilleurs délais.
+      </p>
+    </div>
+
+    <div className="site-cta-panel__actions">
+      <a
+        href="https://forms.gle/gbhjLEfzr83Y5XNm7"
+        target="_blank"
+        rel="noreferrer"
+        className="site-button site-button--primary"
+      >
+        Utiliser le formulaire
+      </a>
+
+      <a
+        href="mailto:borymaxime@gmail.com?subject=ClubManager%20-%20Demande%20d'information"
+        className="site-button site-button--secondary"
+      >
+        Envoyer un email
+      </a>
+    </div>
+  </section>
+</div>
           </div>
         </section>
       </main>
-
-      <style>{`
-        .animate-on-scroll {
-          opacity: 0;
-          transform: translateY(30px);
-          transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .animate-on-scroll.animate-visible {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      `}</style>
-    </Layout>
+    </SiteLayout>
   );
 }

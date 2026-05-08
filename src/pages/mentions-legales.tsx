@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import Layout from '@theme/Layout';
-import Navbar from '../components/Navbar';
+import SiteLayout from '../components/site/SiteLayout';
 
 export default function MentionsLegales(): React.ReactNode {
   useEffect(() => {
@@ -18,12 +17,11 @@ export default function MentionsLegales(): React.ReactNode {
   }, []);
 
   return (
-    <Layout 
+    <SiteLayout 
       title="Mentions légales" 
       description="Mentions légales de ClubManager - Québec, Canada"
     >
       <main className="min-h-screen bg-white">
-        <Navbar />
 
         <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
           <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16 md:py-24">
@@ -187,19 +185,7 @@ export default function MentionsLegales(): React.ReactNode {
             </div>
           </div>
         </section>
-
-        <style>{`
-          .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-          }
-          .animate-on-scroll.animate-visible {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        `}</style>
       </main>
-    </Layout>
+    </SiteLayout>
   );
 }
